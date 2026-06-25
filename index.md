@@ -111,7 +111,7 @@ a:hover { color: #ff6666; }
 
 <div class="profile">
     <!-- https://github.com/zmy992772/zmy992772.github.io/blob/3ffe8956ff3242deaa84aa9c76dd73b3e8559c2f/assets/IMG_20260625_224326.jpg -->
-    <img src="https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/avatar.jpg" alt="头像">
+    <img src="https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/assets/IMG_20260625_224326.jpg" alt="头像">
     <div class="info">
         <h2>第五千零一朵玫瑰</h2>
         <p>🌍 总有一天你会明白，生活就是生锈的过程，反不反抗最后都会变成一把铁石心肠的零件。”</p>
