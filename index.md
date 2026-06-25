@@ -3,6 +3,81 @@ layout: home
 title: 首页
 ---
 
+<style>
+/* ===== 红黑配色 · 暗黑风格 ===== */
+body {
+    background: #0d0d0d;
+    color: #e0e0e0;
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+.posts-list .post {
+    background: #1a1a1a;
+    padding: 24px 28px;
+    border-radius: 16px;
+    border-left: 4px solid #cc0000;
+    box-shadow: 0 4px 20px rgba(204, 0, 0, 0.08);
+    margin-bottom: 20px;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+.posts-list .post:hover {
+    box-shadow: 0 8px 40px rgba(204, 0, 0, 0.18);
+    transform: translateY(-2px);
+}
+.post-link {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.4rem;
+}
+.post-link:hover {
+    color: #ff3333;
+    text-decoration: underline;
+}
+.post-meta {
+    color: #888888;
+    font-size: 0.9rem;
+}
+.page-heading {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border-bottom: 2px solid #cc0000;
+    padding-bottom: 8px;
+}
+#status {
+    background: #1a1a1a;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #cc0000;
+    box-shadow: 0 0 20px rgba(204, 0, 0, 0.10);
+    margin-top: 24px;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+#status .online { color: #66ff66; }
+#status .offline { color: #ff4444; }
+a { color: #ff3333; }
+a:hover { color: #ff6666; }
+.site-footer {
+    border-top: 1px solid #2a2a2a;
+    color: #777777;
+}
+.feed-subscribe {
+    background: #cc0000;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.feed-subscribe:hover {
+    background: #ff1a1a;
+    color: #fff;
+}
+</style>
+
 # 欢迎来到我的博客
 
 这里会自动显示文章列表（由 Jekyll 生成）。
@@ -11,8 +86,8 @@ title: 首页
 
 ## 博主在线状态
 
-<div id="status" style="font-size:18px;">加载中...</div>
-<div id="time" style="font-size:14px;color:#666;">最后更新：--</div>
+<div id="status">加载中...</div>
+<div id="time" style="font-size:14px;color:#888;margin-top:8px;">最后更新：--</div>
 
 <script>
 fetch('https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/data.json?t=' + Date.now())
@@ -22,12 +97,12 @@ fetch('https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/data
     const pcOnline = (now - json.pc * 1000) < 600000;
     const phoneOnline = (now - json.phone * 1000) < 600000;
     document.getElementById('status').innerHTML = `
-      💻 电脑：${pcOnline ? '🟢 在线' : '🔴 离线'}<br>
-      📱 手机：${phoneOnline ? '🟢 在线' : '🔴 离线'}
+      💻 电脑：<span class="${pcOnline ? 'online' : 'offline'}">${pcOnline ? '🟢 在线' : '🔴 离线'}</span><br>
+      📱 手机：<span class="${phoneOnline ? 'online' : 'offline'}">${phoneOnline ? '🟢 在线' : '🔴 离线'}</span>
     `;
     document.getElementById('time').textContent = '最后更新：' + new Date().toLocaleString();
   })
   .catch(() => {
-    document.getElementById('status').textContent = '加载失败，请刷新';
+    document.getElementById('status').textContent = '⚠️ 加载失败，请刷新';
   });
 </script>
