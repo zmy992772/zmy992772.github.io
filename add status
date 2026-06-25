@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的在线状态</title>
+</head>
+<body>
+    <h1>🟢 博主在线状态</h1>
+    <div id="status">加载中...</div>
+    <div id="time">最后更新：--</div>
+
+    <script>
+        // 这里先模拟数据，后面再换成你的真实接口
+        const data = {
+            pc: Date.now() - 300000,   // 模拟5分钟前在线
+            phone: Date.now() - 600000  // 模拟10分钟前在线
+        };
+
+        function checkStatus(deviceTime) {
+            return (Date.now() - deviceTime) < 600000; // 10分钟超时
+        }
+
+        const pcOnline = checkStatus(data.pc);
+        const phoneOnline = checkStatus(data.phone);
+
+        document.getElementById('status').innerHTML = `
+            💻 电脑：${pcOnline ? '🟢 在线' : '🔴 离线'}<br>
+            📱 手机：${phoneOnline ? '🟢 在线' : '🔴 离线'}
+        `;
+        document.getElementById('time').innerHTML = `最后更新：${new Date().toLocaleString()}`;
+    </script>
+</body>
+</html>
