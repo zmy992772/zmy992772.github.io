@@ -77,7 +77,46 @@ a:hover { color: #ff6666; }
     color: #fff;
 }
 </style>
+<style>
+/* 头像 + 博主名片样式 */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #1a1a1a;
+    padding: 20px 24px;
+    border-radius: 20px;
+    border-left: 4px solid #cc0000;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(204,0,0,0.08);
+}
+.profile img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #cc0000;
+}
+.profile .info h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 22px;
+}
+.profile .info p {
+    margin: 4px 0 0;
+    color: #aaaaaa;
+    font-size: 14px;
+}
+</style>
 
+<div class="profile">
+    <!-- 头像：换成你自己的图片链接 -->
+    <img src="https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/avatar.jpg" alt="头像">
+    <div class="info">
+        <h2>第五千零一朵玫瑰</h2>
+        <p>🌍 总有一天你会明白，生活就是生锈的过程，反不反抗最后都会变成一把铁石心肠的零件。”</p>
+    </div>
+</div>
 # 欢迎来到我的博客
 
 这里会自动显示文章列表（由 Jekyll 生成）。
