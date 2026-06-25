@@ -1,1 +1,99 @@
+/* ===== 红黑配色 · 暗黑风格 ===== */
 
+/* 整体背景 & 字体 */
+body {
+    background: #0d0d0d;
+    color: #e0e0e0;
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 页面主容器 */
+.site-header, .site-footer, .page-content {
+    background: transparent;
+}
+
+/* 文章卡片 */
+.posts-list .post {
+    background: #1a1a1a;
+    padding: 24px 28px;
+    border-radius: 16px;
+    border-left: 4px solid #cc0000;
+    box-shadow: 0 4px 20px rgba(204, 0, 0, 0.08);
+    margin-bottom: 20px;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+.posts-list .post:hover {
+    box-shadow: 0 8px 40px rgba(204, 0, 0, 0.18);
+    transform: translateY(-2px);
+}
+
+/* 文章标题 */
+.post-link {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.4rem;
+}
+.post-link:hover {
+    color: #ff3333;
+    text-decoration: underline;
+}
+
+/* 发布日期 */
+.post-meta {
+    color: #888888;
+    font-size: 0.9rem;
+}
+
+/* 页面主标题 */
+.page-heading {
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border-bottom: 2px solid #cc0000;
+    padding-bottom: 8px;
+}
+
+/* 在线状态卡片（你嵌入的那个） */
+#status {
+    background: #1a1a1a;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #cc0000;
+    box-shadow: 0 0 20px rgba(204, 0, 0, 0.10);
+    margin-top: 24px;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+#status .online { color: #66ff66; }
+#status .offline { color: #ff4444; }
+
+/* 链接 */
+a {
+    color: #ff3333;
+}
+a:hover {
+    color: #ff6666;
+}
+
+/* 页脚 */
+.site-footer {
+    border-top: 1px solid #2a2a2a;
+    color: #777777;
+}
+
+/* RSS 订阅链接 */
+.feed-subscribe {
+    background: #cc0000;
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.feed-subscribe:hover {
+    background: #ff1a1a;
+    color: #fff;
+}
