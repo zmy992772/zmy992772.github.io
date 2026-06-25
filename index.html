@@ -2,57 +2,69 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>我的在线状态</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
+    <title>调试状态</title>
+    <meta http-equiv="Cache-Control" content="no-cache">
     <style>
-        body { font-family: Arial; text-align: center; padding: 50px; background: #f0f2f5; }
-        .card { background: white; padding: 40px; border-radius: 20px; max-width: 400px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
+        body { font-family: monospace; padding: 20px; background: #f0f2f5; }
+        .card { background: white; padding: 30px; border-radius: 20px; max-width: 700px; margin: auto; }
+        .debug { font-size: 14px; background: #f5f5f5; padding: 15px; border-radius: 8px; white-space: pre-wrap; word-break: break-all; }
         .status { font-size: 20px; line-height: 2; }
-        .time { color: #999; font-size: 14px; margin-top: 20px; }
-        .online { color: #22c55e; }
-        .offline { color: #ef4444; }
-        .debug { font-size: 12px; color: #999; margin-top: 20px; word-break: break-all; }
+        .online { color: green; }
+        .offline { color: red; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>🟢 博主在线状态</h1>
-        <div class="status" id="status">加载中...</div>
-        <div class="time" id="time">最后更新：--</div>
-        <div class="debug" id="debug"></div>
+        <h1>🔍 调试模式</h1>
+        <div class="status" id="status">⏳ 加载中...</div>
+        <div class="debug" id="debug">等待数据...</div>
     </div>
 
     <script>
-        // 加时间戳强制刷新，避免缓存
-        const timestamp = new Date().getTime();
-        fetch('https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/data.json?t=' + timestamp)
-            .then(res => {
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                return res.json();
-            })
-            .then(json => {
-                document.getElementById('debug').textContent = '原始数据：' + JSON.stringify(json);
-                
-                const now = Date.now();
-                // 确保是数字类型
-                const pcTime = Number(json.pc) * 1000;
-                const phoneTime = Number(json.phone) * 1000;
-                const pcOnline = (now - pcTime) < 600000;
-                const phoneOnline = (now - phoneTime) < 600000;
+        (function() {
+            const debug = document.getElementById('debug');
+            const statusEl = document.getElementById('status');
 
-                document.getElementById('status').innerHTML = `
-                    💻 电脑：<span class="${pcOnline ? 'online' : 'offline'}">${pcOnline ? '🟢 在线' : '🔴 离线'}</span><br>
-                    📱 手机：<span class="${phoneOnline ? 'online' : 'offline'}">${phoneOnline ? '🟢 在线' : '🔴 离线'}</span>
-                `;
-                document.getElementById('time').innerHTML = '最后更新：' + new Date().toLocaleString() + '（数据时间：' + new Date(pcTime).toLocaleString() + '）';
-            })
-            .catch(err => {
-                document.getElementById('status').innerHTML = '⚠️ 加载失败，请刷新';
-                document.getElementById('debug').textContent = '错误：' + err.message;
-            });
+            const url = 'https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/data.json?t=' + Date.now();
+
+            debug.textContent = '⏳ 请求中...\n' + url + '\n';
+
+            fetch(url)
+                .then(res => {
+                    debug.textContent += '✅ HTTP状态: ' + res.status + '\n';
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.text();
+                })
+                .then(text => {
+                    debug.textContent += '📄 原始响应: ' + text + '\n';
+                    const json = JSON.parse(text);
+                    debug.textContent += '📦 解析后: ' + JSON.stringify(json, null, 2) + '\n';
+                    
+                    const now = Date.now();
+                    const pc = Number(json.pc);
+                    const phone = Number(json.phone);
+                    const pcTime = pc * 1000;
+                    
+                    const pcOnline = (now - pcTime) < 600000;
+                    const phoneOnline = (now - phone * 1000) < 600000;
+
+                    statusEl.innerHTML = `
+                        💻 电脑：<span class="${pcOnline ? 'online' : 'offline'}">${pcOnline ? '🟢 在线' : '🔴 离线'}</span><br>
+                        📱 手机：<span class="${phoneOnline ? 'online' : 'offline'}">${phoneOnline ? '🟢 在线' : '🔴 离线'}</span>
+                    `;
+
+                    debug.textContent += `
+                        ⏰ 当前时间: ${new Date(now).toLocaleString()}
+                        pc时间: ${new Date(pcTime).toLocaleString()}
+                        时间差: ${Math.round((now - pcTime) / 1000)} 秒
+                        在线: ${pcOnline ? '✅' : '❌'}
+                    `;
+                })
+                .catch(err => {
+                    statusEl.textContent = '⚠️ 加载失败';
+                    debug.textContent += '❌ 错误: ' + err.message;
+                });
+        })();
     </script>
 </body>
 </html>
