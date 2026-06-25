@@ -110,7 +110,7 @@ a:hover { color: #ff6666; }
 </style>
 
 <div class="profile">
-    <!-- 头像：换成你自己的图片链接 -->
+    <!-- https://github.com/zmy992772/zmy992772.github.io/blob/3ffe8956ff3242deaa84aa9c76dd73b3e8559c2f/assets/IMG_20260625_224326.jpg -->
     <img src="https://raw.githubusercontent.com/zmy992772/zmy992772.github.io/main/avatar.jpg" alt="头像">
     <div class="info">
         <h2>第五千零一朵玫瑰</h2>
