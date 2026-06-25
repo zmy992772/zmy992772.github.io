@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>我的在线状态</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; background: #f0f2f5; }
+        .card { background: white; padding: 40px; border-radius: 20px; max-width: 400px; margin: auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .status { font-size: 20px; line-height: 2; }
+        .time { color: #999; font-size: 14px; margin-top: 20px; }
+        .online { color: #22c55e; }
+        .offline { color: #ef4444; }
+    </style>
 </head>
 <body>
-    <h1>🟢 博主在线状态</h1>
-    <div id="status">加载中...</div>
-    <div id="time">最后更新：--</div>
+    <div class="card">
+        <h1>🟢 博主在线状态</h1>
+        <div class="status" id="status">加载中...</div>
+        <div class="time" id="time">最后更新：--</div>
+    </div>
 
     <script>
-        // 模拟数据
-        const data = {
-            pc: Date.now() - 300000,
-            phone: Date.now() - 600000
-        };
+        const OWNER = "zmy992772";
+        const REPO = "status";
+        const FILE = "data.json";
 
-        function checkStatus(deviceTime) {
-            return (Date.now() - deviceTime) < 600000;
-        }
+        fetch(`https://gitee.com/api/v5/repos/${OWNER}/${REPO}/contents/${FILE}`)
+            .then(res => res.json())
+            .then(data => {
+                const content = atob(data.content);
+                const json = JSON.parse(content);
+                const now = Date.now();
+                const pcOnline = (now - json.pc * 1000) < 600000;
+                const phoneOnline = (now - json.phone * 1000) < 600000;
 
-        const pcOnline = checkStatus(data.pc);
-        const phoneOnline = checkStatus(data.phone);
-
-        document.getElementById('status').innerHTML = `
-            💻 电脑：${pcOnline ? '🟢 在线' : '🔴 离线'}<br>
-            📱 手机：${phoneOnline ? '🟢 在线' : '🔴 离线'}
-        `;
-        document.getElementById('time').innerHTML = `最后更新：${new Date().toLocaleString()}`;
+                document.getElementById('status').innerHTML = `
+                    💻 电脑：<span class="${pcOnline ? 'online' : 'offline'}">${pcOnline ? '🟢 在线' : '🔴 离线'}</span><br>
+                    📱 手机：<span class="${phoneOnline ? 'online' : 'offline'}">${phoneOnline ? '🟢 在线' : '🔴 离线'}</span>
+                `;
+                document.getElementById('time').innerHTML = '最后更新：' + new Date().toLocaleString();
+            })
+            .catch(() => {
+                document.getElementById('status').innerHTML = '⚠️ 加载失败，请刷新';
+            });
     </script>
 </body>
 </html>
